@@ -10,7 +10,7 @@ import Translation
 
 struct ContentView: View {
     @State private var showTranslation = false
-    var welcomeText = "Welcome! This is an app that greets you in whatever language you like. Click the translate button to see a translation of this paragraph."
+    @State private var welcomeText = "Welcome! This is an app that greets you in whatever language you like. Click the translate button to see a translation of this paragraph."
     
     var body: some View {
         VStack {
@@ -22,7 +22,10 @@ struct ContentView: View {
                    action: { showTranslation.toggle() })
             .buttonStyle(.borderedProminent)
         }
-        .translationPresentation(isPresented: $showTranslation, text: welcomeText)
+        .translationPresentation(isPresented: $showTranslation,
+                                 text: welcomeText) { translatedString in
+            welcomeText = translatedString
+        }
         .padding()
     }
 }
