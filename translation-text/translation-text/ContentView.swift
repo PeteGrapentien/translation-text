@@ -6,14 +6,25 @@
 //
 
 import SwiftUI
+import Translation
 
 struct ContentView: View {
+    @State private var showTranslation = false
+    @State private var welcomeText = "Welcome! This is an app that greets you in whatever language you like. Click the translate button to see a translation of this paragraph."
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            
+            Text(welcomeText)
+                .font(.system(size: 20))
+                .multilineTextAlignment(.center)
+            Button("Translate",
+                   action: { showTranslation.toggle() })
+            .buttonStyle(.borderedProminent)
+        }
+        .translationPresentation(isPresented: $showTranslation,
+                                 text: welcomeText) { translatedString in
+            welcomeText = translatedString
         }
         .padding()
     }
